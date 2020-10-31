@@ -108,7 +108,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                         ngenic,
                         node,
                         node_name,
-                        timedelta(minutes=5),
+                        timedelta(minutes=20),
                         MeasurementType.TEMPERATURE
                     )
                 )            
@@ -120,7 +120,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                         ngenic,
                         node,
                         node_name,
-                        timedelta(minutes=5),
+                        timedelta(minutes=20),
                         MeasurementType.HUMIDITY
                     )
                 )
@@ -132,7 +132,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                         ngenic,
                         node,
                         node_name,
-                        timedelta(minutes=1),
+                        timedelta(minutes=5),
                         MeasurementType.POWER_KW
                     )
                 )
@@ -144,27 +144,7 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
                         ngenic,
                         node,
                         node_name,
-                        timedelta(minutes=10),
-                        MeasurementType.ENERGY_KWH
-                    )
-                )
-                devices.append(
-                    NgenicEnergySensorMonth(
-                        hass,
-                        ngenic,
-                        node,
-                        node_name,
                         timedelta(minutes=20),
-                        MeasurementType.ENERGY_KWH
-                    )
-                )
-                devices.append(
-                    NgenicEnergySensorLastMonth(
-                        hass,
-                        ngenic,
-                        node,
-                        node_name,
-                        timedelta(minutes=60),
                         MeasurementType.ENERGY_KWH
                     )
                 )
