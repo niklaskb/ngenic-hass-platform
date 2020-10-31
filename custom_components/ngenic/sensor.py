@@ -19,8 +19,7 @@ import homeassistant.util.dt as dt_util
 
 from .const import (
     DOMAIN,
-    DATA_CLIENT,
-    SCAN_INTERVAL
+    DATA_CLIENT
 )
 
 _LOGGER = logging.getLogger(__name__)
