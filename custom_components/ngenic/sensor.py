@@ -81,6 +81,24 @@ def get_from_to_datetime(days=1):
     return (from_dt.isoformat() + " " + TIME_ZONE, 
             to_dt.isoformat() + " " + TIME_ZONE)
 
+def get_from_to_datetime_epoch(days=1):
+    """Get a period since start of the unix epoch.
+    This will return two dates in ISO 8601:2004 format
+    The first date will be at 00:00 in 1970-01-01, and the second
+    date will be at 00:00 n days ahead of now.
+
+    Both dates include the time zone name, or `Z` in case of UTC.
+    Including these will allow the API to handle DST correctly.
+
+    When asking for measurements, the `from` datetime is inclusive
+    and the `to` datetime is exclusive.
+    """
+    from_dt = datetime.utcfromtimestamp(0)
+    to_dt = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=days)
+
+    return (from_dt.isoformat() + " " + TIME_ZONE,
+            to_dt.isoformat() + " " + TIME_ZONE)
+
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up the sensor platform."""
     ngenic = hass.data[DOMAIN][DATA_CLIENT]
@@ -264,10 +282,10 @@ class NgenicEnergySensor(NgenicSensor):
         """Ask for measurements for a duration.
         This requires some further inputs, so we'll override the _async_fetch_measurement method.
         """
-        from_dt, to_dt = get_from_to_datetime()
+        from_dt, to_dt = get_from_to_datetime_epoch()
         # using datetime will return a list of measurements
         # we'll use the last item in that list
-        current = await self._node.async_measurement(self._measurement_type, from_dt, to_dt, "P1D")
+        current = await self._node.async_measurement(self._measurement_type, from_dt, to_dt)
         return round(current[-1]["value"], 1)
 
     @property
