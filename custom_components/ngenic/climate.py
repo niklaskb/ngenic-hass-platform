@@ -108,7 +108,17 @@ class NgenicTune(ClimateEntity):
     def hvac_modes(self):
         """Must be implemented"""
         return [HVAC_MODE_HEAT]
-
+    
+    @property
+    def max_temp(self):
+        """Returns the maximum temperature."""
+        return 25
+    
+    @property
+    def min_temp(self):
+        """Returns the minimum temperature."""
+        return 12
+    
     async def async_set_temperature(self, **kwargs):
         """Set new target temperature."""
         temperature = kwargs.get(ATTR_TEMPERATURE)
